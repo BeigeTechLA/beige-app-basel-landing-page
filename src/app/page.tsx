@@ -140,7 +140,7 @@ const NavbarChoice = () => {
               Log in
             </a>
             <a
-              href="https://form.typeform.com/to/PLACEHOLDER"
+              href="https://form.typeform.com/to/uPQyrRea"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full"
