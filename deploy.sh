@@ -6,8 +6,8 @@
 set -e  # Exit on error
 
 # Configuration
-PEM_FILE="../beigeapp.pem"
-SERVER_IP="16.171.208.166"
+PEM_FILE="beigeapp.pem"
+SERVER_HOST="ec2-16-171-226-170.eu-north-1.compute.amazonaws.com"
 SERVER_USER="ubuntu"
 APP_NAME="beige-landing"
 REMOTE_DIR="/home/ubuntu/beige-app-basel-landing-page"
@@ -44,7 +44,7 @@ if [ ! -f "package.json" ]; then
     exit 1
 fi
 
-log_info "Starting deployment to $SERVER_IP"
+log_info "Starting deployment to $SERVER_HOST"
 
 # Step 1: Version bump (optional - ask user)
 read -p "Do you want to bump the version? (patch/minor/major/skip) [skip]: " VERSION_BUMP
@@ -66,7 +66,7 @@ rsync -avz --progress \
     --exclude '.git' \
     --exclude 'deploy.sh' \
     --exclude '.env.local' \
-    $LOCAL_DIR/ $SERVER_USER@$SERVER_IP:$REMOTE_DIR/
+    $LOCAL_DIR/ $SERVER_USER@$SERVER_HOST:$REMOTE_DIR/
 
 if [ $? -eq 0 ]; then
     log_info "Files synced successfully"
@@ -77,7 +77,7 @@ fi
 
 # Step 3: Install dependencies, build, and restart on server
 log_info "Running remote deployment commands..."
-ssh -i $PEM_FILE $SERVER_USER@$SERVER_IP << 'ENDSSH'
+ssh -i $PEM_FILE $SERVER_USER@$SERVER_HOST << 'ENDSSH'
 set -e
 
 # Load NVM
@@ -116,7 +116,7 @@ fi
 log_info "Verifying deployment..."
 sleep 3
 
-ssh -i $PEM_FILE $SERVER_USER@$SERVER_IP << 'ENDSSH'
+ssh -i $PEM_FILE $SERVER_USER@$SERVER_HOST << 'ENDSSH'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
@@ -125,7 +125,7 @@ ENDSSH
 
 log_info "============================================"
 log_info "Deployment Summary:"
-log_info "  Server: $SERVER_IP"
+log_info "  Server: $SERVER_HOST"
 log_info "  App: $APP_NAME"
 log_info "  URL: https://book.beige.app"
 log_info "============================================"

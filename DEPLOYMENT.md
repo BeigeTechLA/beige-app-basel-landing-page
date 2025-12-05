@@ -4,8 +4,8 @@ Deployment scripts for beige-app-basel-landing-page to AWS EC2.
 
 ## Prerequisites
 
-- PEM file: `../beigeapp.pem` (one directory up)
-- Server: `16.171.208.166`
+- PEM file: `beigeapp.pem` (in project root)
+- Server: `ec2-16-171-226-170.eu-north-1.compute.amazonaws.com`
 - SSH access configured
 
 ## Quick Start
@@ -65,16 +65,16 @@ If you need to run steps manually:
 ### 1. Sync Files Only
 ```bash
 rsync -avz \
-  -e "ssh -i ../beigeapp.pem" \
+  -e "ssh -i beigeapp.pem" \
   --exclude 'node_modules' \
   --exclude '.next' \
   --exclude '.git' \
-  ./ ubuntu@16.171.208.166:/home/ubuntu/beige-app-basel-landing-page/
+  ./ ubuntu@ec2-16-171-226-170.eu-north-1.compute.amazonaws.com:/home/ubuntu/beige-app-basel-landing-page/
 ```
 
 ### 2. Build on Server
 ```bash
-ssh -i ../beigeapp.pem ubuntu@16.171.208.166 \
+ssh -i ../beigeapp.pem ubuntu@ec2-16-171-226-170.eu-north-1.compute.amazonaws.com \
   'cd ~/beige-app-basel-landing-page && \
    export NVM_DIR="$HOME/.nvm" && \
    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
@@ -84,7 +84,7 @@ ssh -i ../beigeapp.pem ubuntu@16.171.208.166 \
 
 ### 3. Restart PM2
 ```bash
-ssh -i ../beigeapp.pem ubuntu@16.171.208.166 \
+ssh -i ../beigeapp.pem ubuntu@ec2-16-171-226-170.eu-north-1.compute.amazonaws.com \
   'export NVM_DIR="$HOME/.nvm" && \
    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
    pm2 restart beige-landing && \
@@ -93,7 +93,7 @@ ssh -i ../beigeapp.pem ubuntu@16.171.208.166 \
 
 ### 4. Check Logs
 ```bash
-ssh -i ../beigeapp.pem ubuntu@16.171.208.166 \
+ssh -i ../beigeapp.pem ubuntu@ec2-16-171-226-170.eu-north-1.compute.amazonaws.com \
   'export NVM_DIR="$HOME/.nvm" && \
    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
    pm2 logs beige-landing --lines 50'
@@ -113,7 +113,7 @@ When using `deploy.sh`, you'll be asked to bump version:
 ### Script can't find PEM file
 ```bash
 # Check PEM location
-ls -la ../beigeapp.pem
+ls -la beigeapp.pem
 
 # If elsewhere, update PEM_FILE variable in scripts
 ```
@@ -127,7 +127,7 @@ chmod +x deploy.sh quick-deploy.sh
 ### PM2 process not found
 ```bash
 # SSH into server and check PM2
-ssh -i ../beigeapp.pem ubuntu@16.171.208.166
+ssh -i ../beigeapp.pem ubuntu@ec2-16-171-226-170.eu-north-1.compute.amazonaws.com
 pm2 list
 
 # Restart if needed
@@ -139,7 +139,7 @@ pm2 start npm --name "beige-landing" -- start
 ### Build fails on server
 ```bash
 # SSH and check logs
-ssh -i ../beigeapp.pem ubuntu@16.171.208.166
+ssh -i ../beigeapp.pem ubuntu@ec2-16-171-226-170.eu-north-1.compute.amazonaws.com
 cd ~/beige-app-basel-landing-page
 npm run build
 
@@ -149,7 +149,7 @@ npm run build
 ### Site not updating
 ```bash
 # Hard restart PM2
-ssh -i ../beigeapp.pem ubuntu@16.171.208.166 \
+ssh -i ../beigeapp.pem ubuntu@ec2-16-171-226-170.eu-north-1.compute.amazonaws.com \
   'pm2 delete beige-landing && \
    cd ~/beige-app-basel-landing-page && \
    pm2 start npm --name "beige-landing" -- start && \
@@ -161,7 +161,7 @@ ssh -i ../beigeapp.pem ubuntu@16.171.208.166 \
 
 ## Server Details
 
-- **Server IP**: 16.171.208.166
+- **Server**: ec2-16-171-226-170.eu-north-1.compute.amazonaws.com
 - **Domain**: https://book.beige.app
 - **App Directory**: `/home/ubuntu/beige-app-basel-landing-page`
 - **PM2 Process**: `beige-landing`
@@ -171,7 +171,7 @@ ssh -i ../beigeapp.pem ubuntu@16.171.208.166 \
 ## Post-Deployment Checks
 
 1. **Check site loads**: https://book.beige.app
-2. **Check PM2 status**: `ssh -i ../beigeapp.pem ubuntu@16.171.208.166 pm2 list`
+2. **Check PM2 status**: `ssh -i ../beigeapp.pem ubuntu@ec2-16-171-226-170.eu-north-1.compute.amazonaws.com pm2 list`
 3. **Check nginx**: Site should be accessible via HTTPS
 4. **Check logs**: Look for any errors in PM2 logs
 
@@ -181,7 +181,7 @@ If deployment breaks the site:
 
 ```bash
 # SSH into server
-ssh -i ../beigeapp.pem ubuntu@16.171.208.166
+ssh -i ../beigeapp.pem ubuntu@ec2-16-171-226-170.eu-north-1.compute.amazonaws.com
 
 # Check PM2 logs for errors
 pm2 logs beige-landing
@@ -201,7 +201,7 @@ If you need environment variables:
 1. Create `.env.local` on server (not synced by deploy scripts)
 2. SSH into server and edit:
 ```bash
-ssh -i ../beigeapp.pem ubuntu@16.171.208.166
+ssh -i ../beigeapp.pem ubuntu@ec2-16-171-226-170.eu-north-1.compute.amazonaws.com
 cd ~/beige-app-basel-landing-page
 nano .env.local
 ```

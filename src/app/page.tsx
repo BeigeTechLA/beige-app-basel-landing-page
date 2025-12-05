@@ -220,7 +220,7 @@ const StatsSection = () => {
                 className="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-normal"
               />
               <video
-                src="/camerav.mp4"
+                src="/videosnap.mp4"
                 autoPlay
                 loop
                 muted
