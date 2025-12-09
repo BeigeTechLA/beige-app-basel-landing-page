@@ -3,9 +3,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/container";
-import { SiAmazon, SiChase, SiDhl, SiRollsroyce, SiFigma, SiNike } from "react-icons/si"; 
-// Note: Using react-icons for logos if available, otherwise fallback to text/images.
-// Since we might not have these specific icons installed, I'll use placeholders or text.
+
+// Note: Using text placeholders for now.
+
 
 const BRANDS = [
     { name: "DHL", logo: "/images/logos/dhl.svg" },
