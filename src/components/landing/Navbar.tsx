@@ -5,12 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 const navLinks = [
-  { label: "For Brands", href: "#brands" },
-  { label: "For Creators", href: "#creators" },
-  { label: "For Investors", href: "#investors" },
-  { label: "Showcase", href: "#showcase" },
+  { label: "Home", href: "/", isButton: true },
+  { label: "About", href: "#about" },
+  { label: "Find Creative Work", href: "#find-work" },
+  { label: "Press", href: "#press" },
 ];
 
 export const Navbar = () => {
@@ -25,43 +26,65 @@ export const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 h-20 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 h-[108px] transition-all duration-300 ${
         isScrolled
-          ? "bg-black/80 backdrop-blur-xl border-b border-white/10"
+          ? "bg-[#050505]/80 backdrop-blur-[10px] border-b border-white/10"
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-6 h-full flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center">
-          <span className="text-2xl font-bold text-white tracking-tight">
-            BEIGE
-          </span>
-        </Link>
+      <div className="container mx-auto px-8 md:px-12 h-full flex items-center justify-between max-w-[1600px]">
+        {/* Left Side: Logo + Nav */}
+        <div className="flex items-center gap-12">
+            {/* Logo */}
+            <Link href="/" className="flex items-center">
+            <div className="relative w-[100px] h-[28px]">
+                <Image 
+                    src="/images/logos/beige_logo_vb.png" 
+                    alt="BEIGE" 
+                    fill
+                    className="object-contain object-left"
+                    priority
+                />
+            </div>
+            </Link>
 
-        {/* Desktop Navigation Links */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-white hover:text-[#ECE1CE] transition-colors text-sm font-medium"
-            >
-              {link.label}
-            </a>
-          ))}
+            {/* Desktop Navigation Links */}
+            <div className="hidden lg:flex items-center gap-2">
+            {navLinks.map((link) => (
+                <Link
+                key={link.label}
+                href={link.href}
+                className={`
+                    text-sm font-medium transition-all px-4 py-2 rounded-full
+                    ${link.isButton 
+                        ? "bg-white text-black hover:bg-white/90" 
+                        : "text-white hover:text-[#ECE1CE] opacity-70 hover:opacity-100"}
+                `}
+                >
+                {link.label}
+                </Link>
+            ))}
+            </div>
         </div>
 
-        {/* Desktop CTA */}
-        <div className="hidden md:block">
-          <Button variant="beige" size="default">
-            Join Waitlist
-          </Button>
+        {/* Right Buttons */}
+        <div className="hidden lg:flex items-center gap-4">
+            <Link 
+                href="/login" 
+                className="text-white text-sm font-medium hover:text-[#ECE1CE] transition-colors px-6 py-3 border border-white/20 rounded-[8px] hover:bg-white/5"
+            >
+                Login
+            </Link>
+            <Button 
+                className="bg-[#ECE1CE] text-[#030303] hover:bg-[#dcb98a] h-[48px] px-6 rounded-[8px] text-sm font-medium"
+            >
+                Become a Investor
+            </Button>
         </div>
 
         {/* Mobile Hamburger */}
         <button
-          className="md:hidden text-white z-50"
+          className="lg:hidden text-white z-50"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
@@ -77,27 +100,38 @@ export const Navbar = () => {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="fixed top-0 right-0 bottom-0 w-64 bg-black/95 backdrop-blur-xl border-l border-white/10 md:hidden"
+            className="fixed top-0 right-0 bottom-0 w-full sm:w-[375px] bg-[#050505] border-l border-white/10 lg:hidden z-40 overflow-y-auto"
           >
-            <div className="flex flex-col gap-6 p-8 pt-24">
+            <div className="flex flex-col gap-8 p-8 pt-32">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-white hover:text-[#ECE1CE] transition-colors text-lg font-medium"
+                  className={`
+                    text-2xl font-medium transition-colors
+                    ${link.isButton ? "text-[#ECE1CE]" : "text-white hover:text-[#ECE1CE]"}
+                  `}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
-              <Button
-                variant="beige"
-                size="default"
-                className="w-full mt-4"
-                onClick={() => setMobileOpen(false)}
-              >
-                Join Waitlist
-              </Button>
+               <div className="flex flex-col gap-4 mt-8">
+                <Link
+                    href="/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="text-white hover:text-[#ECE1CE] transition-colors text-xl font-medium"
+                >
+                    Login
+                </Link>
+                <Button
+                    variant="beige"
+                    className="w-full h-[60px] text-lg"
+                    onClick={() => setMobileOpen(false)}
+                >
+                    Become a Investor
+                </Button>
+              </div>
             </div>
           </motion.div>
         )}
@@ -111,7 +145,7 @@ export const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm lg:hidden z-30"
             onClick={() => setMobileOpen(false)}
           />
         )}

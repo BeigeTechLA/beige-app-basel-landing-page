@@ -2,133 +2,90 @@
 
 import React from "react";
 import Link from "next/link";
-import { Instagram, Linkedin, Twitter } from "lucide-react";
+import { Instagram, Linkedin, Twitter, Facebook, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
+import { Button } from "@/components/ui/button";
 
 export const Footer = () => {
   return (
-    <footer className="bg-[#0a0a0a] border-t border-white/10">
+    <footer className="bg-[#0a0a0a] border-t border-white/10 pt-24 pb-12">
       <Container>
-        <div className="py-16 md:py-20">
-          {/* Logo and Tagline */}
-          <div className="mb-12">
-            <Link href="/" className="inline-block mb-4">
-              <span className="text-white text-2xl font-bold tracking-wider">BEIGE</span>
-            </Link>
-            <p className="text-white/60 text-sm max-w-md">
-              Professional event coverage services for brands, creators, and influencers.
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-16 mb-24">
+            {/* Logo & CTA Column */}
+            <div className="lg:col-span-1 flex flex-col gap-8">
+                 <Link href="/" className="inline-block">
+                    <span className="text-3xl font-bold text-[#e8d1ab] tracking-wider">BEIGE</span>
+                 </Link>
+                 
+                 <div className="mt-8">
+                     <Button 
+                        className="bg-transparent border border-white/20 hover:bg-white/5 text-white h-[56px] px-6 rounded-full flex items-center gap-3 w-fit transition-all group"
+                     >
+                        <div className="w-2 h-2 rounded-full bg-green-500" />
+                        Start Your Project with Beige
+                        <ArrowRight size={16} className="text-white/50 group-hover:translate-x-1 transition-transform" />
+                     </Button>
+                 </div>
+            </div>
+
+            {/* Links Column 1 */}
+            <div>
+                 <h4 className="text-white/40 text-xs uppercase tracking-widest mb-8">Main Links</h4>
+                 <ul className="space-y-4">
+                     <li><Link href="/" className="text-white hover:text-[#ECE1CE] transition-colors font-medium">Home</Link></li>
+                     <li><Link href="#about" className="text-white hover:text-[#ECE1CE] transition-colors font-medium">About</Link></li>
+                     <li><Link href="#blogs" className="text-white hover:text-[#ECE1CE] transition-colors font-medium">Blogs</Link></li>
+                     <li><Link href="#find-work" className="text-white hover:text-[#ECE1CE] transition-colors font-medium">Find Creative Work</Link></li>
+                 </ul>
+            </div>
+
+            {/* Links Column 2 */}
+            <div>
+                 <h4 className="text-white/40 text-xs uppercase tracking-widest mb-8">Legal</h4>
+                 <ul className="space-y-4">
+                     <li><Link href="/terms" className="text-white hover:text-[#ECE1CE] transition-colors font-medium">Terms of Service</Link></li>
+                     <li><Link href="/privacy" className="text-white hover:text-[#ECE1CE] transition-colors font-medium">Privacy Policy</Link></li>
+                 </ul>
+            </div>
+
+            {/* Contact Column */}
+            <div>
+                 <h4 className="text-white/40 text-xs uppercase tracking-widest mb-8">Contact Us</h4>
+                 <ul className="space-y-4">
+                     <li className="text-white font-medium flex items-center gap-2">
+                         <span className="text-white/60">📞</span> 323-826-7230
+                     </li>
+                     <li>
+                         <a href="mailto:info@beigecorporation.io" className="text-white hover:text-[#ECE1CE] transition-colors font-medium flex items-center gap-2">
+                             <span className="text-white/60">✉️</span> info@beigecorporation.io
+                         </a>
+                     </li>
+                 </ul>
+            </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10">
+            <p className="text-white/40 text-sm mb-4 md:mb-0">
+                Copyright © 2025 Beige. All rights reserved.
             </p>
-          </div>
-
-          {/* Four Column Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
-            {/* About Column */}
-            <div>
-              <h4 className="text-white font-semibold text-lg mb-4">About</h4>
-              <p className="text-white/60 text-sm leading-relaxed">
-                Beige Media
-              </p>
-            </div>
-
-            {/* Services Column */}
-            <div>
-              <h4 className="text-white font-semibold text-lg mb-4">Services</h4>
-              <ul className="space-y-3">
-                <li>
-                  <Link href="#livestreaming" className="text-white/60 hover:text-white transition-colors text-sm">
-                    Livestreaming
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#photography" className="text-white/60 hover:text-white transition-colors text-sm">
-                    Photography
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#videography" className="text-white/60 hover:text-white transition-colors text-sm">
-                    Videography
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#event-coverage" className="text-white/60 hover:text-white transition-colors text-sm">
-                    Event Coverage
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Legal Column */}
-            <div>
-              <h4 className="text-white font-semibold text-lg mb-4">Legal</h4>
-              <ul className="space-y-3">
-                <li>
-                  <Link href="/privacy" className="text-white/60 hover:text-white transition-colors text-sm">
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/terms" className="text-white/60 hover:text-white transition-colors text-sm">
-                    Terms of Service
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/cookies" className="text-white/60 hover:text-white transition-colors text-sm">
-                    Cookie Policy
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Social/Contact Column */}
-            <div>
-              <h4 className="text-white font-semibold text-lg mb-4">Social</h4>
-              <div className="flex gap-4 mb-6">
-                <a
-                  href="https://instagram.com/beigemedia"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white/60 hover:text-[#ECE1CE] transition-colors"
-                  aria-label="Instagram"
-                >
-                  <Instagram className="w-6 h-6" />
+            
+            <div className="flex gap-4">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-white/10 transition-colors border border-white/10">
+                    <Facebook size={18} />
                 </a>
-                <a
-                  href="https://linkedin.com/company/beigemedia"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white/60 hover:text-[#ECE1CE] transition-colors"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin className="w-6 h-6" />
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-white/10 transition-colors border border-white/10">
+                    <Linkedin size={18} />
                 </a>
-                <a
-                  href="https://twitter.com/beigemedia"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white/60 hover:text-[#ECE1CE] transition-colors"
-                  aria-label="Twitter"
-                >
-                  <Twitter className="w-6 h-6" />
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-white/10 transition-colors border border-white/10">
+                    <Twitter size={18} />
                 </a>
-              </div>
-              <a
-                href="mailto:hello@beigemedia.com"
-                className="text-white/60 hover:text-white transition-colors text-sm"
-              >
-                hello@beigemedia.com
-              </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-white/10 transition-colors border border-white/10">
+                    <Instagram size={18} />
+                </a>
             </div>
-          </div>
-
-          {/* Copyright Section */}
-          <div className="border-t border-white/10 mt-12 pt-8 text-center">
-            <p className="text-sm text-white/40">
-              &copy; {new Date().getFullYear()} Beige Media. All rights reserved.
-            </p>
-          </div>
         </div>
       </Container>
     </footer>
   );
 };
-

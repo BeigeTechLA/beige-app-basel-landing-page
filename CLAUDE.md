@@ -163,7 +163,11 @@ src/
 ### Design System
 
 **Design Reference:**
-The landing page design is documented in `landingpage.png` at the project root. This is the source of truth for layout, spacing, typography, and visual hierarchy.
+- **Current Implementation:** The new Beige Website Redesign from Figma is the primary design reference. See `FIGMA_DESIGN_SPEC.md` for comprehensive specifications.
+- **Legacy Reference:** `landingpage.png` in project root was the original design concept (partially implemented, now superseded by Figma redesign).
+- **Figma File:** [Beige Website Redesign](https://www.figma.com/design/9AbpkwbOJI9rt4S3V316OE/Beige-Website--Redesign-?node-id=118-2535&m=dev)
+
+**IMPORTANT:** Always refer to `FIGMA_DESIGN_SPEC.md` for up-to-date design specifications, component details, and implementation guidelines.
 
 **Color Palette:**
 - Background: `#050505` (near-black, almost pure black)
