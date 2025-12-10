@@ -148,14 +148,20 @@ export const HowItWorks = () => {
           {/* ✅ Desktop-only RIGHT video */}
           <div className="hidden lg:flex w-full lg:flex-1 p-[28px]">
             <div className="w-full h-[700px] overflow-hidden relative rounded-[20px] border border-white/10">
-              <video
-                className="absolute inset-0 w-full h-full object-cover"
-                src={videoUrl}
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
+              {
+                videoUrl ? (
+                  <video
+                    className="absolute inset-0 w-full h-full object-cover"
+                    src={videoUrl}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-zinc-900" />
+                )
+              }
 
               <div className="absolute bottom-8 right-8 w-[50px] h-[50px] bg-white rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-300 shadow-lg z-20">
                 <Play className="w-[20px] h-[20px] text-black ml-1" />

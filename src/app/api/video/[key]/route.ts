@@ -18,10 +18,10 @@ const s3 = new AWS.S3({
 // 2. Server-Side Function to Get the Presigned URL
 export async function GET(
   request: NextRequest,
-  context: { params: { key: string } }
+  context: { params: Promise<{ key: string }> }
 ) {
 
-  const { key } = await context.params; // ✅ FIX
+  const { key } = await context.params;
   const videoKey = decodeURIComponent(key);
 
   if (!videoKey) {
