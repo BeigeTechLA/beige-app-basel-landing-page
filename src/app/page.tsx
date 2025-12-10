@@ -15,23 +15,48 @@ import { CTABanner } from "@/components/landing/CTABanner";
 import { FAQ } from "@/components/landing/FAQ";
 import { Waitlist } from "@/components/landing/Waitlist";
 import { Footer } from "@/components/landing/Footer";
+import { Separator } from "@/components/landing/Separator";
 
 export default function Home() {
   return (
-    <main className="bg-[#050505] min-h-screen text-white font-sans selection:bg-[#ECE1CE] selection:text-black">
+    <main className="bg-[#010101] min-h-screen text-white font-sans selection:bg-[#ECE1CE] selection:text-black">
       <Navbar />
       <Hero />
+      <Separator />
+
       <About />
+      <Separator />
+
       <HowItWorks />
+      <Separator />
+
       <Brands />
+      <Separator />
+
       <Influencers />
+      <Separator />
+
       <Process />
+      <Separator />
+
       <Projects />
+      <Separator />
+
       <Gallery />
+      <Separator />
+
       <Testimonials />
+      <Separator />
+
       <CTABanner />
+      <Separator />
+
       <FAQ />
+      <Separator />
+
       <Waitlist />
+      <Separator />
+
       <Footer />
     </main>
   );

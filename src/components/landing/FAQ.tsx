@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import { Container } from "@/components/ui/container";
 
 interface FAQItem {
@@ -63,66 +63,96 @@ export const FAQ = () => {
   return (
     <section className="py-20 md:py-32 bg-black relative overflow-hidden">
       <Container>
-        {/* Section Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-lg text-white/60 max-w-2xl mx-auto">
-            Everything you need to know about Beige Media services
+        <div className="border-b border-t border-b-white/60 border-t-white/60 w-[140px] py-2 text-center mb-6">
+          <p className="text-base text-white">
+            FAQ
           </p>
-        </motion.div>
-
-        {/* FAQ Items */}
-        <div className="max-w-3xl mx-auto">
-          {FAQ_ITEMS.map((item, index) => (
+        </div>
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
+          {/* Left Content */}
+          <div className="w-full lg:w-1/3 shrink-0">
+            {/* Section Title */}
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.05, duration: 0.5 }}
-              className="border-b border-white/10 py-6"
+              transition={{ duration: 0.6 }}
+              className=" mb-16"
             >
-              <button
-                onClick={() => toggleItem(index)}
-                className="flex justify-between items-center w-full text-left group"
-              >
-                <span className="text-lg font-semibold text-white group-hover:text-[#ECE1CE] transition-colors pr-8">
-                  {item.question}
-                </span>
-                <motion.div
-                  animate={{ rotate: openIndex === index ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex-shrink-0"
-                >
-                  <ChevronDown className="w-5 h-5 text-white/60 group-hover:text-[#ECE1CE] transition-colors" />
-                </motion.div>
-              </button>
-
-              <AnimatePresence>
-                {openIndex === index && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="overflow-hidden"
-                  >
-                    <p className="text-white/70 leading-relaxed mt-4 pr-12">
-                      {item.answer}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <h2 className="text-2xl md:text-[56px] leading-[1.1] font-medium text-gradient-white mb-8 tracking-tight">
+                Everything You Need<br />to Know!
+              </h2>
+              {/* <p className="text-lg text-white/60 max-w-2xl mx-auto">
+                Everything you need to know about Beige Media services
+              </p> */}
             </motion.div>
-          ))}
+          </div>
+
+          {/* Right Grid */}
+          <div className="w-full lg:w-2/3">
+            {/* FAQ Items */}
+            <div className="max-w-3xl mx-auto">
+              {FAQ_ITEMS.map((item, index) => {
+                const isOpen = openIndex === index;
+                const isLast = index === FAQ_ITEMS.length - 1;
+                const isFirst = index === 0;
+
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05, duration: 0.5 }}
+                    className={`
+                      ${!isLast ? "border-b border-white/10" : ""}
+                      ${isFirst ? "pt-0" : "pt-6"}
+                      ${isLast ? "pb-0" : "pb-6"}
+                    `}
+                  >
+                    <button
+                      onClick={() => toggleItem(index)}
+                      className="flex justify-between items-center w-full text-left group"
+                    >
+                      <span className="text-lg lg:text-[28px] text-white transition-colors pr-8">
+                        {item.question}
+                      </span>
+
+                      {/* Toggle Icon */}
+                      <motion.div
+                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="flex-shrink-0"
+                      >
+                        {isOpen ? (
+                          <Minus className="w-5 h-5 text-white/60 transition-colors" />
+                        ) : (
+                          <Plus className="w-5 h-5 text-white/60 transition-colors" />
+                        )}
+                      </motion.div>
+                    </button>
+
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <p className="text-white/70 lg:text-xl leading-relaxed mt-4 pr-12">
+                            {item.answer}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+          </div>
         </div>
       </Container>
     </section>

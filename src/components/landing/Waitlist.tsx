@@ -23,7 +23,9 @@ export const Waitlist = () => {
     city: "",
   });
 
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -33,124 +35,185 @@ export const Waitlist = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
-    // Simulate API call
     setTimeout(() => setStatus("success"), 1500);
   };
 
   return (
-    <section className="py-20 md:py-32 bg-[#050505] relative overflow-hidden">
+    <section className="py-20 md:py-32 bg-[#010101] relative overflow-hidden">
       <Container>
-        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-            
-            {/* Form Container */}
-            <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="w-full lg:w-1/2"
-            >
-                 <div className="mb-12">
-                     <h2 className="text-4xl md:text-[58px] font-medium text-white mb-6 tracking-tight">
-                        Join the Waitlist
-                     </h2>
-                     <p className="text-lg text-white/60 font-light">
-                        Be the first to experience the future of livestreaming, photography, and videography booking.
-                     </p>
-                 </div>
+        <div className="p-10 lg:py-[100px] lg:px-[50px] bg-[#171717] rounded-[20px] mx-auto text-center">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-24"
+          >
+            <div className="inline-flex items-center border-b border-t border-b-white/60 border-t-white/60 w-fit px-10 py-2 text-center mb-6">
+              <p className="text-base text-white">Contact Us</p>
+            </div>
 
-                 <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                     <input
-                        type="text"
-                        name="name"
-                        placeholder="Full name*"
-                        required
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        className="w-full h-[74px] bg-white/[0.05] border border-white/20 rounded-[8px] px-6 text-white text-lg placeholder:text-white/50 focus:outline-none focus:border-[#ECE1CE] transition-colors"
-                     />
-                     <input
-                        type="email"
-                        name="email"
-                        placeholder="Email ID*"
-                        required
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className="w-full h-[74px] bg-white/[0.05] border border-white/20 rounded-[8px] px-6 text-white text-lg placeholder:text-white/50 focus:outline-none focus:border-[#ECE1CE] transition-colors"
-                     />
-                     <div className="flex flex-col md:flex-row gap-6">
-                        <input
-                            type="tel"
-                            name="phone"
-                            placeholder="Mobile Number"
-                            value={formData.phone}
-                            onChange={handleInputChange}
-                            className="w-full h-[74px] bg-white/[0.05] border border-white/20 rounded-[8px] px-6 text-white text-lg placeholder:text-white/50 focus:outline-none focus:border-[#ECE1CE] transition-colors"
+            <h2 className="text-2xl md:text-[56px] leading-[1.1] font-medium text-gradient-white mb-6 tracking-tight">
+              Coming to Your City Soon.
+            </h2>
+            <p className="text-white/50 text-sm lg:text-base lg:max-w-2/3 mx-auto font-light">
+              We're currently launching in Los Angeles, but we're expanding to
+              new cities soon. Join our waitlist to be the first to know when
+              Beige becomes available in your area and get priority access when
+              we launch.
+            </p>
+          </motion.div>
+
+          {/* Main Content Row */}
+          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 bg-[#010101] p-6 lg:p-16 rounded-[20px]">
+            {/* LEFT: Form */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="w-full lg:w-1/2 text-left"
+            >
+              <div className="mb-12">
+
+                <p className="text-xl lg:text-[28px] text-white font-light">
+                  Get Early Access to Beige
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                <div className="relative">
+                  <label className="absolute -top-[10px] left-[20px] bg-[#010101] px-2 text-white/60 text-sm tracking-wide">
+                    Full Name*
+                  </label>
+                  <input
+                    className="w-full h-[74px] bg-[#010101] border border-white/20 rounded-[14px] px-6 text-white text-lg outline-none focus:border-white/60 transition-all"
+                    type="text"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="relative">
+                  <label className="absolute -top-[10px] left-[20px] bg-[#010101] px-2 text-white/60 text-sm tracking-wide">
+                    Email ID*
+                  </label>
+                  <input
+                    className="w-full h-[74px] bg-[#010101] border border-white/20 rounded-[14px] px-6 text-white text-lg outline-none focus:border-white/60 transition-all"
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="relative">
+                  <label className="absolute -top-[10px] left-[20px] bg-[#010101] px-2 text-white/60 text-sm tracking-wide">
+                    Mobile Number
+                  </label>
+                  <input
+                    className="w-full h-[74px] bg-[#010101] border border-white/20 rounded-[14px] px-6 text-white text-lg outline-none focus:border-white/60 transition-all"
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="relative">
+                  <label className="absolute -top-[10px] left-[20px] bg-[#010101] px-2 text-white/60 text-sm tracking-wide">
+                    Company Name
+                  </label>
+                  <input
+                    className="w-full h-[74px] bg-[#010101] border border-white/20 rounded-[14px] px-6 text-white text-lg outline-none focus:border-white/60 transition-all"
+                    type="text"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="relative">
+                  <label className="absolute -top-[10px] left-[20px] bg-[#010101] px-2 text-white/60 text-sm tracking-wide">
+                    Location (City)*
+                  </label>
+                  <input
+                    className="w-full h-[74px] bg-[#010101] border border-white/20 rounded-[14px] px-6 text-white text-lg outline-none focus:border-white/60 transition-all"
+                    type="text"
+                    name="city"
+                    required
+                    value={formData.city}
+                    onChange={handleInputChange}
+                  />
+                </div>
+
+                <div className="mt-4">
+                  {/* <Button
+                    type="submit"
+                    variant="beige"
+                    className="w-full md:w-[243px] h-[72px] text-lg font-medium rounded-[8px]"
+                    disabled={status === "loading"}
+                  >
+                    {status === "loading"
+                      ? "Joining..."
+                      : "Join Waitlist"}
+                  </Button> */}
+                  <Button
+                    className="bg-[#E8D1AB] text-black hover:bg-[#dcb98a] h-[56px] pl-4 pr-2 rounded-[10px] text-xl font-medium flex items-center justify-between gap-6 shadow-[0_0_20px_-5px_rgba(232,209,171,0.3)] transition-all lg:min-w-[240px]"
+                    disabled={status === "loading"}
+                  >
+                    <span className="pr-4 text-sm lg:text-base">
+                      {status === "loading"
+                        ? "Joining..."
+                        : "Join Waitlist"}
+                    </span>
+
+                    {/* Right Dark Icon Box */}
+                    <div className="bg-[#1A1A1A] w-[48px] h-[48px] rounded-[10px] flex items-center justify-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="22"
+                        height="32"
+                        viewBox="0 0 33 26"
+                        fill="none"
+                      >
+                        <path
+                          d="M0.801232 1.6025L2.40373 0L31.2487 12.82L2.40373 25.64L0.801231 24.0375L5.60873 12.82L0.801232 1.6025Z"
+                          fill="#E8D1AB"
                         />
-                        <input
-                            type="text"
-                            name="company"
-                            placeholder="Company Name"
-                            value={formData.company}
-                            onChange={handleInputChange}
-                            className="w-full h-[74px] bg-white/[0.05] border border-white/20 rounded-[8px] px-6 text-white text-lg placeholder:text-white/50 focus:outline-none focus:border-[#ECE1CE] transition-colors"
-                        />
-                     </div>
-                     <input
-                        type="text"
-                        name="city"
-                        placeholder="Location (City)*"
-                        required
-                        value={formData.city}
-                        onChange={handleInputChange}
-                        className="w-full h-[74px] bg-white/[0.05] border border-white/20 rounded-[8px] px-6 text-white text-lg placeholder:text-white/50 focus:outline-none focus:border-[#ECE1CE] transition-colors"
-                     />
-                     
-                     <div className="mt-4">
-                         <Button
-                            type="submit"
-                            variant="beige"
-                            className="w-full md:w-[243px] h-[72px] text-lg font-medium rounded-[8px]"
-                            disabled={status === "loading"}
-                         >
-                            {status === "loading" ? "Joining..." : "Join Waitlist"}
-                         </Button>
-                     </div>
-                     
-                     {status === "success" && (
-                         <div className="text-green-400 mt-4 p-4 bg-green-900/20 border border-green-900/50 rounded-lg">
-                             You have successfully joined the waitlist!
-                         </div>
-                     )}
-                 </form>
+                      </svg>
+                    </div>
+                  </Button>
+
+                </div>
+
+                {status === "success" && (
+                  <div className="text-green-400 mt-4 p-4 bg-green-900/20 border border-green-900/50 rounded-lg">
+                    You have successfully joined the waitlist!
+                  </div>
+                )}
+              </form>
             </motion.div>
 
-            {/* Visual/Globe Placeholder */}
+            {/* RIGHT: Globe Image Column */}
             <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-                className="w-full lg:w-1/2 relative h-[600px] lg:h-[750px] flex items-center justify-center"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="w-full lg:w-1/2 flex items-center justify-center"
             >
-                 {/* Replace with actual Globe component or image */}
-                 <div className="w-[90%] h-[90%] relative">
-                      <div className="absolute inset-0 bg-gradient-to-tr from-[#ECE1CE]/20 to-transparent rounded-full blur-3xl opacity-30" />
-                      <div className="relative z-10 w-full h-full border border-white/10 rounded-full flex items-center justify-center animate-spin-slow">
-                           <div className="w-[80%] h-[80%] border border-white/5 rounded-full" />
-                           <div className="w-[60%] h-[60%] border border-white/5 rounded-full" />
-                      </div>
-                      <div className="absolute inset-0">
-                        <Image 
-                            src="/globe.svg" 
-                            alt="Global Reach" 
-                            fill 
-                            className="object-contain opacity-50"
-                        />
-                      </div>
-                 </div>
+              <div className="relative w-full max-w-[500px] aspect-square">
+                <Image
+                  src="/images/misc/SquareGlobe.png"
+                  alt="Global Reach"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
             </motion.div>
-
+          </div>
         </div>
       </Container>
     </section>

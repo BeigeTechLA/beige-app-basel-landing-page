@@ -20,12 +20,29 @@
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
-  
+
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
-  
+
   --animate-spin-slow: spin 8s linear infinite;
+}
+
+@layer utilities {
+  .text-gradient-white {
+    background: linear-gradient(92deg,
+        #fff 2.28%,
+        #ffffffF0 40%,
+        /* white lasts longer */
+        #ffffff99 75%,
+        /* NEW: stronger grey mid fade */
+        #ffffff33 100%
+        /* grey tail */
+      );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 :root {

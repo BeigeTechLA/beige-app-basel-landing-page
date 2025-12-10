@@ -2,7 +2,6 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Container } from "@/components/ui/container";
 
 const STATS = [
   { value: "$10M+", label: "In Shoots Produced By Our Creatives" },
@@ -13,7 +12,7 @@ const STATS = [
 
 export const Stats = () => {
   return (
-    <div className="w-full border-t border-white/10 pt-16">
+    <div className="w-full">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 relative">
         {STATS.map((stat, i) => (
           <motion.div
@@ -22,12 +21,39 @@ export const Stats = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1, duration: 0.6 }}
-            className="text-center relative flex flex-col items-center justify-center"
+            className="relative flex flex-col items-center justify-center text-center"
           >
-            <h3 className="text-3xl md:text-[40px] font-bold text-[#ECE1CE] mb-3 whitespace-nowrap">
+            {/* Separator - vertical */}
+            {i !== STATS.length - 1 && (
+              <img
+                src="/svg/Separator.svg"
+                alt=""
+                className="
+                  hidden lg:block
+                  absolute -right-[28px] top-1/2 -translate-y-1/2
+                  h-full opacity-80
+                "
+              />
+            )}
+
+            {/* Separator - mobile (2-column layout) */}
+            {i % 2 === 0 && i !== STATS.length - 1 && (
+              <img
+                src="/svg/Separator.svg"
+                alt=""
+                className="
+                  lg:hidden
+                  absolute -right-[16px] top-1/2 -translate-y-1/2
+                  h-[50px] w-auto opacity-40
+                "
+              />
+            )}
+
+            <h3 className="text-3xl md:text-[44px] font-bold text-[#E8D1AB] mb-6 whitespace-nowrap">
               {stat.value}
             </h3>
-            <p className="text-sm md:text-base text-white/50 font-light leading-snug max-w-[180px]">
+
+            <p className="text-sm md:text-xl text-white/70 font-light leading-snug">
               {stat.label}
             </p>
           </motion.div>
