@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Container } from "@/components/ui/container";
 import { TrendingUp } from "lucide-react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 
 const INFLUENCERS = [
   {
@@ -34,47 +34,80 @@ const INFLUENCERS = [
 ];
 
 export const Influencers = () => {
-  const imageHoverRef = useRef(false);
-  const scrollLockRef = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const [lockScroll, setLockScroll] = useState(false);
+
+  // Scroll progress for entire section
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  const total = INFLUENCERS.length;
+  const segment = 1 / total;
 
   const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState<"up" | "down">("down");
 
-  const maxIndex = INFLUENCERS.length - 1;
-  const current = INFLUENCERS[index];
-  const isLeft = index % 2 === 0;
-
-  /* Desktop scroll logic */
   useEffect(() => {
-    const onWheel = (e: WheelEvent) => {
-      if (!imageHoverRef.current) return;
+    const unsub = scrollYProgress.on("change", (v) => {
+      const idx = Math.floor(v / segment);
 
-      e.preventDefault();
-      if (scrollLockRef.current) return;
-
-      scrollLockRef.current = true;
-
-      if (e.deltaY > 0) {
-        setDirection("down");
-        setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
-      } else {
-        setDirection("up");
-        setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
+      if (idx !== index && idx < total) {
+        setIndex(idx);
       }
 
-      setTimeout(() => {
-        scrollLockRef.current = false;
-      }, 800);
-    };
+      // Lock scroll when inside range
+      if (v > 0 && v < 1) {
+        if (!lockScroll) {
+          setLockScroll(true);
+          document.body.style.overflow = "hidden"; // stop page scroll
+        }
+      } else {
+        if (lockScroll) {
+          setLockScroll(false);
+          document.body.style.overflow = ""; // restore page scroll
+        }
+      }
+    });
 
-    window.addEventListener("wheel", onWheel, { passive: false });
-    return () => window.removeEventListener("wheel", onWheel);
-  }, [maxIndex]);
+    return () => {
+      document.body.style.overflow = "";
+      unsub();
+    };
+  }, [scrollYProgress, index, lockScroll]);
+
+  // Current influencer
+  const current = INFLUENCERS[index];
+
+  // Smooth vertical movement
+  const y = useTransform(
+    scrollYProgress,
+    [index * segment, index * segment + segment],
+    [50, -50]
+  );
+
+  const opacity = useTransform(
+    scrollYProgress,
+    [
+      index * segment,
+      index * segment + segment * 0.2,
+      index * segment + segment * 0.8,
+      index * segment + segment,
+    ],
+    [0, 1, 1, 0]
+  );
+
+  // -------------------------------
+  // ⭐ ALTERNATE LEFT/RIGHT
+  // -------------------------------
+  const isLeft = index % 2 === 1;
 
   return (
-    <section className="bg-[#050505] py-20 lg:py-32 overflow-hidden">
+    <section ref={containerRef} className="bg-[#050505] py-20 lg:py-32 overflow-hidden">
       <Container>
-        {/* Header */}
+
+        {/* HEADER */}
         <div className="text-center mb-12 lg:mb-20">
           <div className="inline-flex items-center border-b border-t border-b-white/60 border-t-white/60 w-fit px-10 py-2 text-center mb-6">
             <p className="text-base text-white">Top Influentials</p>
@@ -89,33 +122,17 @@ export const Influencers = () => {
           </p>
         </div>
 
-        {/* ✅ MOBILE VIEW */}
+        {/* MOBILE VIEW — unchanged */}
         <div className="flex flex-col gap-10 lg:hidden">
           {INFLUENCERS.map((item, i) => (
-            <div
-              key={i}
-              className="w-full rounded-[20px] overflow-hidden border border-white/10 bg-black"
-            >
-              {/* Image */}
+            <div key={i} className="w-full rounded-[20px] overflow-hidden border border-white/10 bg-black">
               <div className="relative w-full h-[360px]">
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  fill
-                  className="object-cover"
-                  priority
-                />
+                <Image src={item.image} alt={item.name} fill className="object-cover" priority />
               </div>
 
-              {/* Content */}
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-3">
-                  <Image
-                    src="/svg/Insta.svg"
-                    alt="Instagram"
-                    width={34}
-                    height={34}
-                  />
+                  <Image src="/svg/Insta.svg" alt="Instagram" width={34} height={34} />
                   <h3 className="text-xl text-white">{item.name}</h3>
                 </div>
 
@@ -129,94 +146,58 @@ export const Influencers = () => {
                 </p>
 
                 <div className="inline-flex items-center px-5 py-3 bg-[#ECE1CE] rounded-lg">
-                  <span className="text-black text-lg font-bold mr-2">
-                    {item.followers}
-                  </span>
-                  <span className="text-black/70 text-sm self-end">
-                    Followers
-                  </span>
+                  <span className="text-black text-lg font-bold mr-2">{item.followers}</span>
+                  <span className="text-black/70 text-sm self-end">Followers</span>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* ✅ DESKTOP VIEW (unchanged behaviour) */}
-        <div className="relative items-center justify-center min-h-[620px] hidden lg:flex">
+        {/* DESKTOP VIEW */}
+        <div className="relative items-center justify-center hidden lg:flex">
 
-          {/* Center image */}
-          <div
-            className="relative z-20 w-[420px] h-[380px] 2xl:w-[480px] 2xl:h-[520px] rounded-[24px] overflow-hidden border border-white/10 bg-black"
-            onMouseEnter={() => (imageHoverRef.current = true)}
-            onMouseLeave={() => (imageHoverRef.current = false)}
-          >
-            <Image
-              src={current.image}
-              alt={current.name}
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-
-          {/* Animated side content */}
-          <div className="absolute inset-0 pointer-events-none flex items-center">
+          {/* IMAGE */}
+          <div className="relative z-20 w-[420px] h-[380px] 2xl:w-[480px] 2xl:h-[520px] rounded-[24px] overflow-hidden border border-white/10 bg-black">
             <AnimatePresence mode="wait">
               <motion.div
-                key={current.name}
-                initial={{
-                  opacity: 0,
-                  y: direction === "down" ? 80 : -80,
-                }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{
-                  opacity: 0,
-                  y: direction === "down" ? -80 : 80,
-                }}
-                transition={{
-                  duration: 0.6,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className={`absolute top-1/2 -translate-y-1/2 max-w-[420px] ${
-                  isLeft ? "left-0" : "right-0"
-                }`}
+                key={current.image}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
+                className="absolute inset-0"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <Image
-                    src={"/svg/Insta.svg"}
-                    alt="Instagram Icon"
-                    width={40}
-                    height={40}
-                  />
-                  <h3 className="text-2xl xl:text-[40px] text-white">
-                    {current.name}
-                  </h3>
-                </div>
-
-                <div className="flex items-center gap-2 text-[#ECE1CE] mb-4">
-                  <TrendingUp size={20} />
-                  <span className="font-light text-lg xl:text-2xl">
-                    {current.reach}
-                  </span>
-                </div>
-
-                <p className="text-white/50 text-lg xl:text-2xl font-light leading-relaxed mb-6">
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                </p>
-
-                <div className="inline-flex items-center px-6 py-3 bg-[#ECE1CE] rounded-lg">
-                  <span className="text-black text-xl font-bold mr-2">
-                    {current.followers}
-                  </span>
-                  <span className="text-black/70 text-base self-end">
-                    Followers
-                  </span>
-                </div>
+                <Image src={current.image} alt={current.name} fill className="object-cover" />
               </motion.div>
             </AnimatePresence>
           </div>
-        </div>
 
+          {/* INFO — LEFT OR RIGHT */}
+          <motion.div
+            style={{ y, opacity }}
+            className={`absolute max-w-[420px] ${isLeft ? "left-0" : "right-0"}`}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <Image src={"/svg/Insta.svg"} alt="Instagram Icon" width={40} height={40} />
+              <h3 className="text-2xl xl:text-4xl text-white">{current.name}</h3>
+            </div>
+
+            <div className="flex items-center gap-2 text-[#ECE1CE] mb-4">
+              <TrendingUp size={20} />
+              <span className="font-light text-lg xl:text-2xl">{current.reach}</span>
+            </div>
+
+            <p className="text-white/50 text-lg xl:text-xl font-light leading-relaxed mb-6">
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            </p>
+
+            <div className="inline-flex items-center px-6 py-3 bg-[#ECE1CE] rounded-lg">
+              <span className="text-black text-xl font-bold mr-2">{current.followers}</span>
+              <span className="text-black/70 text-base self-end">Followers</span>
+            </div>
+          </motion.div>
+        </div>
       </Container>
     </section>
   );

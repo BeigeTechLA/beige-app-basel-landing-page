@@ -41,29 +41,29 @@ export const Gallery = () => {
 
   return (
     <section className="bg-[#010101] py-32 relative overflow-hidden">
-      <Container>
-        {/* Header */}
-        <div className="text-center mb-16 relative z-10">
-          {/* <div className="inline-flex items-center border-b border-white/20 pb-2 mb-8">
+      {/* <Container> */}
+      {/* Header */}
+      <div className="text-center mb-16 relative z-10">
+        {/* <div className="inline-flex items-center border-b border-white/20 pb-2 mb-8">
             <span className="text-white/60 text-sm">Gallery</span>
           </div> */}
-          <div className="inline-flex items-center border-b border-t border-b-white/60 border-t-white/60 w-fit px-10 py-2 text-center mb-6">
-            <p className="text-base text-white">
-              Gallery
-            </p>
-          </div>
-
-          <h2 className="text-2xl md:text-[56px] leading-[1.1] font-medium text-gradient-white mb-6 tracking-tight">
-            Chosen by leading professionals to showcase <br />
-            their talent and portfolio.
-          </h2>
-
-          <p className="text-white/50 text-sm lg:text-base max-w-[600px] mx-auto mb-12">
-            The Beige portfolio provides clients with essential details for smarter hiring and offers creatives a world-class stage to display their best work.
+        <div className="inline-flex items-center border-b border-t border-b-white/60 border-t-white/60 w-fit px-10 py-2 text-center mb-6">
+          <p className="text-base text-white">
+            Gallery
           </p>
+        </div>
 
-          {/* Navigation Buttons */}
-          {/* <div className="flex justify-center gap-4">
+        <h2 className="text-2xl md:text-[56px] leading-[1.1] font-medium text-gradient-white mb-6 tracking-tight">
+          Chosen by leading professionals to showcase <br />
+          their talent and portfolio.
+        </h2>
+
+        <p className="text-white/50 text-sm lg:text-base max-w-[600px] mx-auto mb-12">
+          The Beige portfolio provides clients with essential details for smarter hiring and offers creatives a world-class stage to display their best work.
+        </p>
+
+        {/* Navigation Buttons */}
+        {/* <div className="flex justify-center gap-4">
             <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors">
               <ArrowLeft size={20} />
             </button>
@@ -71,10 +71,10 @@ export const Gallery = () => {
               <ArrowRight size={20} />
             </button>
           </div> */}
-        </div>
+      </div>
 
-        {/* Horizontal Scroll / Gallery Layout */}
-        {/* <div className="relative w-full h-[600px] flex items-center justify-center">
+      {/* Horizontal Scroll / Gallery Layout */}
+      {/* <div className="relative w-full h-[600px] flex items-center justify-center">
           <div className="flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
             {GALLERY_IMAGES.map((img, i) => (
               <motion.div
@@ -96,27 +96,27 @@ export const Gallery = () => {
             ))}
           </div> */}
 
-        {/* Fades for sides */}
-        {/* <div className="absolute left-0 top-0 bottom-0 w-[200px] bg-gradient-to-r from-[#010101] to-transparent z-20 pointer-events-none" />
+      {/* Fades for sides */}
+      {/* <div className="absolute left-0 top-0 bottom-0 w-[200px] bg-gradient-to-r from-[#010101] to-transparent z-20 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-[200px] bg-gradient-to-l from-[#010101] to-transparent z-20 pointer-events-none" />
         </div> */}
 
-        <div className="relative w-full h-[300px] md:h-[400px] lg:h-[700px] overflow-hidden">
-          <div className="pointer-events-none absolute top-0 left-0 w-full h-[80px] z-[2] bg-gradient-to-t from-transparent via-[#010101]/80 to-[#010101]" />
-          {
-            videoUrl &&
-            <video
-              className="absolute inset-0 w-full h-full object-cover"
-              src={videoUrl}
-              autoPlay
-              loop
-              muted
-              playsInline
-            />
-          }
-          <div className="pointer-events-none absolute bottom-0 left-0 w-full h-[80px] z-[2] bg-gradient-to-t from-[#010101] via-[#010101]/80 to-transparent" />
-        </div>
-      </Container>
+      <div className="relative w-full h-[300px] md:h-[400px] lg:h-[700px] overflow-hidden">
+        <div className="pointer-events-none absolute top-0 left-0 w-full h-[80px] z-[2] bg-gradient-to-t from-transparent via-[#010101]/80 to-[#010101]" />
+        {
+          videoUrl &&
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            src={videoUrl}
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        }
+        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-[80px] z-[2] bg-gradient-to-t from-[#010101] via-[#010101]/80 to-transparent" />
+      </div>
+      {/* </Container> */}
     </section>
   );
 };
