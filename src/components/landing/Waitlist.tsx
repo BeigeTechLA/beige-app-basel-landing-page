@@ -66,14 +66,14 @@ export const Waitlist = () => {
           </motion.div>
 
           {/* Main Content Row */}
-          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 bg-[#010101] p-6 lg:p-16 rounded-[20px]">
+          <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-24 bg-[#010101] rounded-[20px]">
             {/* LEFT: Form */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="w-full lg:w-1/2 text-left"
+              className="w-full lg:w-1/2 text-left p-6 lg:p-16"
             >
               <div className="mb-12">
 
@@ -203,7 +203,7 @@ export const Waitlist = () => {
               transition={{ duration: 0.6 }}
               className="w-full lg:w-1/2 flex items-center justify-center"
             >
-              <div className="relative w-full max-w-[500px] aspect-square">
+              <div className="relative w-full h-[300px] lg:h-[700px] xl:h-[800px] max-w-[500px] lg:max-w-none">
                 <Image
                   src="/images/misc/SquareGlobe.png"
                   alt="Global Reach"

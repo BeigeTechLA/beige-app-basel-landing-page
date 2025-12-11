@@ -13,11 +13,7 @@ export const Hero = () => {
     const fetchSignedUrl = async () => {
       try {
         const response = await fetch(`/api/video/${videoFileName}`);
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch signed URL.");
-        }
-
+        if (!response.ok) throw new Error("Failed to fetch signed URL.");
         const data = await response.json();
         setVideoUrl(data.url);
       } catch (error) {
@@ -39,39 +35,26 @@ export const Hero = () => {
   return (
     <section
       ref={heroRef}
-      className="pt-30 lg:pt-[180px] pb-20 overflow-hidden min-h-screen flex flex-col items-center bg-[#010101]"
+      className="pt-30 lg:pt-30 pb-20 overflow-hidden min-h-screen flex flex-col items-center bg-[#010101]"
     >
-      {/* Video Container */}
-      <div className="relative w-full">
-        {/* Background Video */}
-        {
-          videoUrl &&
-          <video
-            className="absolute inset-0 w-full h-full object-cover z-0"
-            src={videoUrl}
-            autoPlay
-            loop
-            muted
-            playsInline
-          />
-        }
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/50 z-[1]" />
+      {/* Background video */}
+      {videoUrl && (
+        <video
+          className="absolute inset-0 w-full h-full object-cover z-0"
+          src={videoUrl}
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+      )}
 
-        {/* Bottom fade overlay */}
-        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-[300px] z-[2] bg-gradient-to-t from-[#010101] via-[#010101]/80 to-transparent" />
+      {/* Bottom fade overlay */}
+      <div className="pointer-events-none absolute bottom-0 left-0 w-full h-18 xl:h-[80px] z-[2] bg-gradient-to-t from-[#010101] via-[#010101]/80 to-transparent" />
 
-        {/* Background sparkles */}
-        <div className="absolute inset-0 z-[2]">
-          <div className="absolute top-[30%] left-[10%] w-[2px] h-[100px] bg-gradient-to-b from-transparent via-white/50 to-transparent" />
-          <div className="absolute top-[30%] left-[10%] w-[100px] h-[2px] bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-[49px] translate-y-[49px]" />
-
-          <div className="absolute bottom-[30%] right-[10%] w-[2px] h-[100px] bg-gradient-to-b from-transparent via-white/50 to-transparent" />
-          <div className="absolute bottom-[30%] right-[10%] w-[100px] h-[2px] bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-[49px] translate-y-[49px]" />
-        </div>
-
-        {/* Content */}
-        <div className="container mx-auto px-4 md:px-6 relative z-[3] flex flex-col items-center">
+      {/* Content */}
+      <div className="relative z-10 w-full">
+        <div className="container mx-auto px-4 md:px-6 flex flex-col items-center">
           {/* Launch Badge */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -94,20 +77,11 @@ export const Hero = () => {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="text-center max-w-[1237px] mb-16"
           >
-            {/* <h1 className="text-5xl md:text-6xl leading-[1.1] font-bold text-white tracking-tight">
-              The Ultimate Platform for Livestreaming,
-              <br />
-              <span className="text-white/50">
-                Photography & Videography
-              </span>
-            </h1> */}
-
             <h1 className="text-xl md:text-6xl lg:text-[64px] leading-[1.1] font-bold tracking-tight text-gradient-white">
               The Ultimate Platform for Livestreaming,
               <br />
               Photography & Videography
             </h1>
-
           </motion.div>
 
           {/* Buttons */}
@@ -127,8 +101,8 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* Subheadline section under video */}
-      <div className="w-full">
+      {/* Subheadline */}
+      <div className="relative z-10 w-full">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -136,12 +110,19 @@ export const Hero = () => {
           className="text-center max-w-[300px] lg:max-w-[600px] mb-12 mx-auto"
         >
           <p className="text-sm md:text-base text-[#999999] leading-relaxed">
-            From cultural moments to world-class productions, book the
-            perfect creator for live streaming, videography, and
-            photography in minutes with our AI-powered platform.
+            From cultural moments to world-class productions, book the perfect
+            creator for live streaming, videography, and photography in minutes
+            with our AI-powered platform.
           </p>
         </motion.div>
       </div>
+
+      {/* Updated SVG overlay replacing all previous overlays */}
+      <img
+        src="/svg/Herobannerbackground1.svg"
+        alt="Decorative Overlay"
+        className="absolute inset-0 w-full h-full object-cover z-[1] pointer-events-none"
+      />
     </section>
   );
 };
